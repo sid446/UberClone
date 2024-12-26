@@ -55,3 +55,24 @@ The request body must be a JSON object containing the following fields:
 {
   "message": "Internal Server Error"
 }
+
+## /users/login
+
+### Description
+This endpoint is used to log in an existing user.
+
+### Method
+`POST`
+
+### Request Body
+The request body must be a JSON object containing the following fields:
+
+- `email` (string, required): The email address of the user. Must be a valid email format.
+- `password` (string, required): The password for the user. Must be at least 6 characters long.
+
+### Example Request
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
