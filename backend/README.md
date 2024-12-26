@@ -26,8 +26,10 @@ The request body must be a JSON object containing the following fields:
   "email": "john.doe@example.com",
   "password": "password123"
 }
+```
 
-##Responses
+### Responses
+```json
 {
   "token": "jwt_token_here",
   "user": {
@@ -40,8 +42,10 @@ The request body must be a JSON object containing the following fields:
     "socketId": null
   }
 }
-##Validtion Error
+```
 
+### Validation Error
+```json
 {
   "errors": [
     {
@@ -51,10 +55,14 @@ The request body must be a JSON object containing the following fields:
     }
   ]
 }
-##server error
+```
+
+### Server Error
+```json
 {
   "message": "Internal Server Error"
 }
+```
 
 ## /users/login
 
@@ -76,3 +84,58 @@ The request body must be a JSON object containing the following fields:
   "email": "john.doe@example.com",
   "password": "password123"
 }
+```
+
+## /users/profile
+
+### Description
+This endpoint is used to get the profile of the logged-in user.
+
+### Method
+`GET`
+
+### Headers
+- `Authorization` (string, required): The JWT token of the logged-in user.
+
+### Example Request
+```
+GET /users/profile
+Authorization: Bearer jwt_token_here
+```
+
+### Example Response
+```json
+{
+  "_id": "user_id_here",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "socketId": null
+}
+```
+
+## /users/logout
+
+### Description
+This endpoint is used to log out the current user.
+
+### Method
+`GET`
+
+### Headers
+- `Authorization` (string, required): The JWT token of the logged-in user.
+
+### Example Request
+```
+GET /users/logout
+Authorization: Bearer jwt_token_here
+```
+
+### Example Response
+```json
+{
+  "message": "Logged Out"
+}
+```
