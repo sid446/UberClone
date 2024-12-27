@@ -10,6 +10,10 @@ const registerUser=async(req,res,next)=>{
         return res.status(400).json({errors:errors.array()})
     }
     const {fullname,email,password}=req.body;
+    const isUser=await userModel.findOne({email});
+    if(isUser){
+        return res(400).json({message:'User already exists'})
+    }
     const hashedPassword=await userModel.hashPassword(password);
     const user =await createUser({firstname:fullname.firstname,lastname:fullname.lastname,email,password:hashedPassword})
     const token=user.generateAuthToken()
