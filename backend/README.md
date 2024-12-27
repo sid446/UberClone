@@ -140,35 +140,32 @@ Authorization: Bearer jwt_token_here
 }
 ```
 
-## /captains/register
+## /captains/profile
 
 ### Description
-This endpoint is used to register a new captain.
+This endpoint is used to get the profile of the logged-in captain.
 
 ### Method
-`POST`
+`GET`
 
-### Request Body
-The request body must be a JSON object containing the following fields:
-
-- `fullname.firstname` (string, required): The first name of the captain. Must be at least 3 characters long.
-- `fullname.lastname` (string, optional): The last name of the captain. Must be at least 3 characters long.
-- `email` (string, required): The email address of the captain. Must be a valid email format.
-- `password` (string, required): The password for the captain. Must be at least 6 characters long.
-- `vehicle.color` (string, required): The color of the vehicle. Must be at least 3 characters long.
-- `vehicle.plate` (string, required): The plate number of the vehicle. Must be at least 3 characters long.
-- `vehicle.capacity` (number, required): The capacity of the vehicle. Must be at least 1.
-- `vehicle.vehicleType` (string, required): The type of the vehicle. Must be one of 'car', 'motorcycle', or 'auto'.
+### Headers
+- `Authorization` (string, required): The JWT token of the logged-in captain.
 
 ### Example Request
+```
+GET /captains/profile
+Authorization: Bearer jwt_token_here
+```
+
+### Example Response
 ```json
 {
+  "_id": "captain_id_here",
   "fullname": {
     "firstname": "John",
     "lastname": "Doe"
   },
   "email": "john.doe@example.com",
-  "password": "password123",
   "vehicle": {
     "color": "red",
     "plate": "ABC123",
@@ -178,45 +175,26 @@ The request body must be a JSON object containing the following fields:
 }
 ```
 
-### Responses
-```json
-{
-  "token": "jwt_token_here",
-  "captain": {
-    "_id": "captain_id_here",
-    "fullname": {
-      "firstname": "John",
-      "lastname": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "vehicle": {
-      "color": "red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    },
-    "socketId": null,
-    "status": "inactive"
-  }
-}
+## /captains/logout
+
+### Description
+This endpoint is used to log out the current captain.
+
+### Method
+`GET`
+
+### Headers
+- `Authorization` (string, required): The JWT token of the logged-in captain.
+
+### Example Request
+```
+GET /captains/logout
+Authorization: Bearer jwt_token_here
 ```
 
-### Validation Error
+### Example Response
 ```json
 {
-  "errors": [
-    {
-      "msg": "Error message here",
-      "param": "field_name",
-      "location": "body"
-    }
-  ]
-}
-```
-
-### Server Error
-```json
-{
-  "message": "Internal Server Error"
+  "message": "Logged Out"
 }
 ```
