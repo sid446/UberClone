@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import UberLogo from '../assets/pngegg.png'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import {UserDataContext} from '../context/UserContext'
 
 
 
@@ -9,17 +11,29 @@ function UserSignUp() {
     const [password, setPassword] = useState('')
     const [Firstname, setFirstName] = useState('')
     const [Lastname, setLastName] = useState('')
-    const [userData, setUserData] = useState({})
+   
+
+    const navigate=useNavigate()
+
+    const {user,setUser}=React.useContext(UserDataContext)
 
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setUserData({fullname:{firstname:Firstname,lastname:Lastname},email:email,password: password})
-        console.log(userData)
+        const newUser=
+        {fullname:{firstname:Firstname,lastname:Lastname},email:email,password: password}
         setFirstName('')
         setLastName('')
         setEmail('')
         setPassword('')
+
+        const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
+        if(response.status===201){
+            const data=response.data
+            setUser(data.user)
+            localStorage.setItem('token',data.token)
+            navigate('/home')
+        }
         
     }
 
@@ -76,7 +90,7 @@ function UserSignUp() {
                 />
                 <button 
                 className='bg-[#111] mb-3 rounded px-4 py-2  w-full text-lg text-white'
-                type="submit">Login</button>
+                type="submit">Create Account</button>
                 
 
             </form>
